@@ -1,16 +1,11 @@
 package CountingValleys;
 
 import java.io.*;
-import java.math.*;
-import java.security.*;
-import java.text.*;
 import java.util.*;
-import java.util.concurrent.*;
-import java.util.function.*;
-import java.util.regex.*;
-import java.util.stream.*;
+import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.atomic.AtomicInteger;
+
 import static java.util.stream.Collectors.joining;
-import static java.util.stream.Collectors.toList;
 
 class Result {
 
@@ -25,10 +20,47 @@ class Result {
 
     public static int countingValleys(int steps, String path) {
         // Write your code here
+        AtomicBoolean isSeaLevel = new AtomicBoolean(true);
+        AtomicBoolean isOverSea = new AtomicBoolean(false);
+        AtomicBoolean isBelowSea = new AtomicBoolean(false);
+        AtomicInteger count = new AtomicInteger();
+        AtomicInteger levelsBelowSea = new AtomicInteger();
+        AtomicInteger levelsOverSea = new AtomicInteger();
 
-        return 0;
+        path.chars().forEach(el -> {
+            if (el == 'D') {
+                if (isSeaLevel.get()) {
+                    isSeaLevel.set(false);
+                    isBelowSea.set(true);
+                    levelsBelowSea.getAndIncrement();
+                } else if (isOverSea.get()) {
+                    levelsOverSea.getAndDecrement();
+                    if (levelsOverSea.get() == 0) {
+                        isSeaLevel.set(true);
+                        isOverSea.set(false);
+                    }
+                } else if (isBelowSea.get()) {
+                    levelsBelowSea.getAndIncrement();
+                }
+            } else if (el =='U') {
+                if (isSeaLevel.get()) {
+                    isSeaLevel.set(false);
+                    isOverSea.set(true);
+                    levelsOverSea.getAndIncrement();
+                } else if (isOverSea.get()) {
+                    levelsOverSea.getAndIncrement();
+                } else if (isBelowSea.get()) {
+                    levelsBelowSea.getAndDecrement();
+                    if (levelsBelowSea.get() == 0) {
+                        isBelowSea.set(false);
+                        isSeaLevel.set(true);
+                        count.getAndIncrement();
+                    }
+                }
+            }
+        });
+        return count.get();
     }
-
 }
 
 public class Solution {
