@@ -30,7 +30,8 @@ class Result {
         int toDelete = 0;
         int index = 0;
 
-        while (index < s.length() && index < t.length() && s.charAt(index) == t.charAt(index)) index++;
+        while (index < s.length() && index < t.length() && s.charAt(index) == t.charAt(index))
+            index++;
 
         toDelete = s.length() - index;
         int ops = toDelete + (t.length() - index);
@@ -40,27 +41,28 @@ class Result {
         } else {
             return "No";
         }
+    }
 }
 
 public class Solution {
     public static void main(String[] args) throws IOException {
-//        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
-//        BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(System.getenv("OUTPUT_PATH")));
-//
-//        String s = bufferedReader.readLine();
-//
-//        String t = bufferedReader.readLine();
-//
-//        int k = Integer.parseInt(bufferedReader.readLine().trim());
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
+        BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(System.getenv("OUTPUT_PATH")));
 
-        String result = Result.appendAndDelete("abcd", "abcdert", 10);
+        String s = bufferedReader.readLine();
+
+        String t = bufferedReader.readLine();
+
+        int k = Integer.parseInt(bufferedReader.readLine().trim());
+
+        String result = Result.appendAndDelete(s, t, k);
 
         System.out.println(result);
-//
-//        bufferedWriter.write(result);
-//        bufferedWriter.newLine();
-//
-//        bufferedReader.close();
-//        bufferedWriter.close();
+
+        bufferedWriter.write(result);
+        bufferedWriter.newLine();
+
+        bufferedReader.close();
+        bufferedWriter.close();
     }
 }
