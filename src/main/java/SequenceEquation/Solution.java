@@ -24,8 +24,17 @@ class Result {
     public static List<Integer> permutationEquation(List<Integer> p) {
         // Write your code here
 
+        int max = p.stream().max(Integer::compare).get().intValue();
 
-        return new ArrayList<>();
+        List<Integer> result = new ArrayList<>();
+
+        IntStream.rangeClosed(1, max).forEach(x -> {
+            int temp = p.indexOf(x) + 1;
+            int temp2 = p.indexOf(temp) + 1;
+            result.add(temp2);
+        });
+
+        return result;
     }
 
 }
